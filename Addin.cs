@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace VersaNote.Interop
 {
-    public class Addin
+    public class Addin : IAddin
     {
         private object VersaNoteObject;
         private MethodInfo[] methods;

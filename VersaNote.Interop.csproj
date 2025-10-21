@@ -31,6 +31,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <Description>Versa Note Interop for accessing publicly exposed methods</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://cadinnovations.ca/</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <Copyright>CAD Innovations</Copyright>
+    <Authors>CADInnvoations</Authors>
+    <Company>CAD Innovations</Company>
+    <RepositoryUrl>https://github.com/CAD-Innovations/VersaNote.Interop</RepositoryUrl>
+    <PackageTags>Versa Note Interop</PackageTags>
+    <PackageReleaseNotes>Update Nuget package details</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <AssemblyName>VersaNote.Interop</AssemblyName>
+  </PropertyGroup>  
   <ItemGroup>
     <Compile Remove="Properties\**" />
     <EmbeddedResource Remove="Properties\**" />
