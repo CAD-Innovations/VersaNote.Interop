@@ -1,0 +1,41 @@
+﻿name: Publish NuGet.org
+
+on:
+  push:
+    #branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    name: Update package
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.3
+
+      - name: Update the Version Number
+        run: |
+          (Get-Content VersaNote.Interop.csproj) -Replace '<Version>*.{7}</Version>', '<Version>${{ vars.STABLEVERSION }}.0</Version>' | Set-Content VersaNote.Interop.csproj
+        
+      - name: Building
+        run: dotnet build VersaNote.Interop.csproj -c Release
+        
+      - name: Packing
+        run: |                    
+          dotnet build VersaNote.Interop.csproj -c Release
+          dotnet pack VersaNote.Interop.csproj -c Release
+
+      # - name: NuGet login (OIDC → temp API key)
+      #   uses: NuGet/login@v1
+      #   id: login
+      #   with:
+      #     user: ${{ secrets.NUGET_USER }}
+
+      # - name: push to NuGet
+      #   shell: pwsh
+      #   run: |
+      #     dotnet nuget push "**/*.nupkg" --skip-duplicate -s https://api.nuget.org/v3/index.json --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
+      #     dotnet nuget push "**/*.snupkg" --skip-duplicate -s https://api.nuget.org/v3/index.json --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
