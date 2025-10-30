@@ -14,12 +14,12 @@ namespace VersaNote.Interop
             methods = VersaNoteObject.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance);
         }
 
-        public void ShowToastNotification(string title, string message)
+        public void ShowToastNotification(string title, string message, NotificationType notificationType)
         {
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(ShowToastNotification));
             if (method != null)
             {
-                object[] parameters = new object[] { title, message };
+                object[] parameters = new object[] { title, message, notificationType };
                 method.Invoke(VersaNoteObject, parameters);
             }
 
