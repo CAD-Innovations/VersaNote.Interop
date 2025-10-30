@@ -41,4 +41,7 @@ jobs:
         shell: pwsh
         run: |
           dotnet nuget push "**/*.nupkg" --skip-duplicate -s https://api.nuget.org/v3/index.json --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
-          dotnet nuget push "**/*.snupkg" --skip-duplicate -s https://api.nuget.org/v3/index.json --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
+
+      - name: Publish GitHub
+        run: |
+          dotnet nuget push "**/*.nupkg" --skip-duplicate --source https://nuget.pkg.github.com/CAD-Innovations/index.json -k ${{secrets.GITHUB_TOKEN}}
