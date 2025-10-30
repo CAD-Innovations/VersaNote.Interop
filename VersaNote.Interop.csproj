@@ -42,7 +42,7 @@
     <Company>CAD Innovations</Company>
     <RepositoryUrl>https://github.com/CAD-Innovations/VersaNote.Interop</RepositoryUrl>
     <PackageTags>Versa Note Interop</PackageTags>
-    <PackageReleaseNotes>Update Nuget package details</PackageReleaseNotes>
+    <PackageReleaseNotes>Add notification type to ShowToastNotification method</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <AssemblyName>VersaNote.Interop</AssemblyName>
   </PropertyGroup>  
