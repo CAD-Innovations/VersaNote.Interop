@@ -19,7 +19,8 @@ namespace VersaNote.Interop
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(ShowToastNotification));
             if (method != null)
             {
-                object[] parameters = new object[] { title, message, notificationType };
+                int intNotificationType = (int)notificationType;
+                object[] parameters = new object[] { title, message, intNotificationType };
                 method.Invoke(VersaNoteObject, parameters);
             }
 
