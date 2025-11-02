@@ -12,17 +12,11 @@ namespace VersaNote.Interop
         Notification
     }
 
-    public enum NoteType_e
+    public enum NoteTypes_e
     {
         Custom,
         Template,
         NewColumn
-    }
-
-    public struct CommitNoteUpdatesResult
-    {
-        public bool Success { get; set; }
-        public string Message { get; set; }
     }
 
     public struct DeleteCustomNoteResult
@@ -47,10 +41,16 @@ namespace VersaNote.Interop
 
     public struct Note
     {
-        public NoteType_e NoteType { get; set; }
+        public NoteTypes_e NoteType { get; set; }
         public string Id { get; set; }
         public string Text { get; set; }
         public bool Indented { get; set; }
+    }
+
+    public struct RefreshNoteTablesResult
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
     }
 
     public struct UpdatedCustomNoteResult

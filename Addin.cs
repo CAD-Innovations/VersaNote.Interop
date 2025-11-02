@@ -23,9 +23,10 @@ namespace VersaNote.Interop
         /// </summary>
         /// <param name="sheetIndex">A 1 based sheet number index</param>
         /// <param name="noteText">Note text</param>
-        /// <param name="noteIndex">A 0 based note index</param>
+        /// <param name="noteIndex">(Optional) A 0 based note index. Specify -1 to add to the end of the notes.</param>
         /// <param name="subNote">(Optional) Set true to create an indented sub-note</param>
         /// <param name="parentId">(Optional) If creating an indented sub-note, you must specify the parent note ID, and the specified note position will be interpreted relative to the parent note (i.e. if the parent note is 3. a noteIndex of 0 would create note 3.1)</param>
+        /// <param name="suppressTableRefresh">(Optional) Set true to suppress note table refresh for improved performance when making multiple API calls</param>
         /// <returns>
         /// A <see cref="AddCustomNoteResult"/> structure containing the result of the operation:
         /// <list type="bullet">
@@ -62,7 +63,7 @@ namespace VersaNote.Interop
         /// }
         /// </code>
         /// </example>
-        public AddCustomNoteResult AddCustomNote(int sheetIndex, string noteText, int noteIndex, bool subNote = false, string parentId = "")
+        public AddCustomNoteResult AddCustomNote(int sheetIndex, string noteText, int noteIndex = -1, bool subNote = false, string parentId = "", bool suppressTableRefresh = false)
         {
             if (subNote == true && parentId == "")
                 return new AddCustomNoteResult()
@@ -77,7 +78,7 @@ namespace VersaNote.Interop
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(AddCustomNote));
             if (method != null)
             {
-                object[] parameters = new object[] { sheetIndex, noteText, noteIndex, subNote, parentId };
+                object[] parameters = new object[] { sheetIndex, noteText, noteIndex, subNote, parentId, suppressTableRefresh };
                 AddCustomNoteResult AddCustomNoteResult = (AddCustomNoteResult)method.Invoke(VersaNoteObject, parameters);
                 return AddCustomNoteResult;
             }
@@ -90,66 +91,11 @@ namespace VersaNote.Interop
         }
 
         /// <summary>
-        /// Call this method after note modifications are complete to update the note tables on the specified drawing sheet.
-        /// <para>
-        /// If this method is not called, the note tables will automatically be updated when the drawing is saved.
-        /// </para>
-        /// </summary>
-        /// <param name="sheetIndex">A 1 based sheet number index</param>
-        /// <returns>
-        /// A <see cref="CommitNoteUpdatesResult"/> structure containing the result of the operation:
-        /// <list type="bullet">
-        /// <item>
-        /// <term><see cref="CommitNoteUpdatesResult.Success"/></term>
-        /// <description>
-        ///     <c>true</c> if the note table(s) were updated successfully; otherwise, <c>false</c>.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <term><see cref="CommitNoteUpdatesResult.Message"/></term>
-        /// <description>
-        ///     A descriptive message providing details about the result. May contain
-        ///     error information if <see cref="CommitNoteUpdatesResult.Success"/> is <c>false</c>.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </returns>
-        /// <example>
-        /// The following example shows how to call this method and inspect the result:
-        /// <code language="csharp">
-        /// var result = VersaNote.Interop.ModifyCustomNote(1, "This is the updated custom note text");
-        /// if (result.Success)
-        /// {
-        ///     Console.WriteLine($"Custom note successfully updated");
-        /// }
-        /// else
-        /// {
-        ///     Console.WriteLine($"Failed to  update custom note: {result.Message}");
-        /// }
-        /// </code>
-        /// </example>
-        public CommitNoteUpdatesResult CommitNoteUpdates(int sheetIndex)
-        {
-            MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(CommitNoteUpdates));
-            if (method != null)
-            {
-                object[] parameters = new object[] { sheetIndex };
-                CommitNoteUpdatesResult commitNoteUpdatesResult = (CommitNoteUpdatesResult)method.Invoke(VersaNoteObject, parameters);
-                return commitNoteUpdatesResult;
-            }
-
-            return new CommitNoteUpdatesResult()
-            {
-                Success = false,
-                Message = $"{MethodInfo.GetCurrentMethod().Name} method not found in Versa Note"
-            };
-        }
-
-        /// <summary>
         /// Delete the specified custom note from the specified drawing sheet.
         /// </summary>
         /// <param name="sheetIndex">A 1 based sheet number index</param>
         /// <param name="noteId">The unique Id of the note to be deleted</param>
+        /// <param name="suppressTableRefresh">(Optional) Set true to suppress note table refresh for improved performance when making multiple API calls</param>
         /// <returns>
         /// A <see cref="DeleteCustomNoteResult"/> structure containing the result of the operation:
         /// <list type="bullet">
@@ -180,14 +126,14 @@ namespace VersaNote.Interop
         /// }
         /// </code>
         /// </example>
-        public DeleteCustomNoteResult DeleteCustomNote(int sheetIndex, string noteId)
+        public DeleteCustomNoteResult DeleteCustomNote(int sheetIndex, string noteId, bool suppressTableRefresh = false)
         {
             // if the note is not custom, return error
 
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(DeleteCustomNote));
             if (method != null)
             {
-                object[] parameters = new object[] { sheetIndex, noteId };
+                object[] parameters = new object[] { sheetIndex, noteId, suppressTableRefresh };
                 DeleteCustomNoteResult deleteCustomNoteResult = (DeleteCustomNoteResult)method.Invoke(VersaNoteObject, parameters);
                 return deleteCustomNoteResult;
             }
@@ -237,7 +183,7 @@ namespace VersaNote.Interop
         ///   <item>
         ///     <term><see cref="Note.NoteType"/></term>
         ///     <description>
-        ///         The type of note, as defined by the <see cref="NoteType_e"/> enumeration.
+        ///         The type of note, as defined by the <see cref="NoteTypes_e"/> enumeration.
         ///     </description>
         ///   </item>
         ///   <item>
@@ -283,14 +229,72 @@ namespace VersaNote.Interop
         }
 
         /// <summary>
+        /// Call this method after note modifications are complete to update the note tables on the specified drawing sheet.
+        /// <para>
+        /// If this method is not called, the note tables will automatically be updated when the drawing is saved.
+        /// </para>
+        /// </summary>
+        /// <param name="sheetIndex">A 1 based sheet number index</param>
+        /// <returns>
+        /// A <see cref="RefreshNoteTablesResult"/> structure containing the result of the operation:
+        /// <list type="bullet">
+        /// <item>
+        /// <term><see cref="RefreshNoteTablesResult.Success"/></term>
+        /// <description>
+        ///     <c>true</c> if the note table(s) were updated successfully; otherwise, <c>false</c>.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <term><see cref="RefreshNoteTablesResult.Message"/></term>
+        /// <description>
+        ///     A descriptive message providing details about the result. May contain
+        ///     error information if <see cref="RefreshNoteTablesResult.Success"/> is <c>false</c>.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </returns>
+        /// <example>
+        /// The following example shows how to call this method and inspect the result:
+        /// <code language="csharp">
+        /// var result = VersaNote.Interop.ModifyCustomNote(1, "This is the updated custom note text");
+        /// if (result.Success)
+        /// {
+        ///     Console.WriteLine($"Custom note successfully updated");
+        /// }
+        /// else
+        /// {
+        ///     Console.WriteLine($"Failed to  update custom note: {result.Message}");
+        /// }
+        /// </code>
+        /// </example>
+        public RefreshNoteTablesResult RefreshNoteTables(int sheetIndex)
+        {
+            MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(RefreshNoteTables));
+            if (method != null)
+            {
+                object[] parameters = new object[] { sheetIndex };
+                RefreshNoteTablesResult commitNoteUpdatesResult = (RefreshNoteTablesResult)method.Invoke(VersaNoteObject, parameters);
+                return commitNoteUpdatesResult;
+            }
+
+            return new RefreshNoteTablesResult()
+            {
+                Success = false,
+                Message = $"{MethodInfo.GetCurrentMethod().Name} method not found in Versa Note"
+            };
+        }
+
+        /// <summary>
         /// Modify an existing custom note on the specified drawing sheet.
         /// <para>
         /// Prior to running this method, you should run GetAllSheetNotes() to get the ID of the custom note to modify.
         /// </para>
         /// </summary>
         /// <param name="sheetIndex">A 1 based sheet number index</param>
+        /// <param name="noteId">The unique Id of the note to be updated</param>
         /// <param name="newNoteText">Note text</param>
         /// <param name="toggleSubNote">(Optional) Set true to toggle the sub-note indenting status</param>
+        /// <param name="suppressTableRefresh">(Optional) Set true to suppress note table refresh for improved performance when making multiple API calls</param>
         /// <returns>
         /// A <see cref="UpdatedCustomNoteResult"/> structure containing the result of the operation:
         /// <list type="bullet">
@@ -321,12 +325,12 @@ namespace VersaNote.Interop
         /// }
         /// </code>
         /// </example>
-        public UpdatedCustomNoteResult UpdateCustomNote(int sheetIndex, string newNoteText, bool toggleSubNote = false)
+        public UpdatedCustomNoteResult UpdateCustomNote(int sheetIndex, string noteId, string newNoteText, bool toggleSubNote = false, bool suppressTableRefresh = false)
         {
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(UpdateCustomNote));
             if (method != null)
             {
-                object[] parameters = new object[] { sheetIndex, newNoteText, toggleSubNote };
+                object[] parameters = new object[] { sheetIndex, noteId, newNoteText, toggleSubNote, suppressTableRefresh };
                 UpdatedCustomNoteResult updatedCustomNoteResult = (UpdatedCustomNoteResult)method.Invoke(VersaNoteObject, parameters);
                 return updatedCustomNoteResult;
             }
