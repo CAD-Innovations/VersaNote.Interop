@@ -73,8 +73,6 @@ namespace VersaNote.Interop
                     NoteId = null
                 };
 
-            string noteId = null;
-
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(AddCustomNote));
             if (method != null)
             {

@@ -42,7 +42,7 @@
     <Company>CAD Innovations</Company>
     <RepositoryUrl>https://github.com/CAD-Innovations/VersaNote.Interop</RepositoryUrl>
     <PackageTags>Versa Note Interop</PackageTags>
-    <PackageReleaseNotes>Add .NET 4.7.2 support</PackageReleaseNotes>
+    <PackageReleaseNotes>Update NoteTypes_e enum values</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <AssemblyName>VersaNote.Interop</AssemblyName>
   </PropertyGroup>  

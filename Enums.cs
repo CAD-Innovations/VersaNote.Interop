@@ -14,9 +14,12 @@ namespace VersaNote.Interop
 
     public enum NoteTypes_e
     {
+        Blank,
         Custom,
-        Template,
-        NewColumn
+        GTol,
+        NewColumn,
+        Standard,
+        Unknown
     }
 
     public struct DeleteCustomNoteResult
