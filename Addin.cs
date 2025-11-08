@@ -215,6 +215,15 @@ namespace VersaNote.Interop
             };
         }
 
+        public void OpenEditor()
+        {
+            MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(OpenEditor));
+            if (method != null)
+            {
+                method.Invoke(VersaNoteObject, null);
+            }
+        }
+
         public void ShowToastNotification(string title, string message, NotificationType notificationType)
         {
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(ShowToastNotification));
