@@ -1,5 +1,5 @@
 # Versa Note Interop
-Enables programmatic interaction with the Versa Note add-in for SolidWorks.
+Enables programmatic interaction with the Versa Note add-in for SolidWorks. This interop is supported by Versa Note v1.28.0 and later.
 
 First, get the Versa Note add-in object in SolidWorks using the Versa Note GUID:
 ```
@@ -15,8 +15,9 @@ int sheetIndex = 1;
 var sheetNotes = VersaNoteAddin.GetAllSheetNotes(sheetIndex);
 ```
 To add a custom note at the end of the notes:
-`var addNoteResult = VersaNoteAddin.AddCustomNote(sheetIndex, "Hello world!");`
-
+```
+var addNoteResult = VersaNoteAddin.AddCustomNote(sheetIndex, "Hello world!");
+```
 
 Similarly, you can delete or update custom notes using `DeleteCustomNote` and `UpdateCustomNote` respectively.
 
@@ -29,4 +30,6 @@ var refreshResult = VersaNoteAddin.RefreshNoteTables(sheetIndex);
 ```
 
 You can also use Versa Note to display toast notifications, which can be helpful to avoid overlapping notifications from multiple add-ins:
-`VersaNoteAddin.ShowToastNotification("Hello From Another Application", "We hope you are enjoying Versa Note!", NotificationType.Information);`
+```
+VersaNoteAddin.ShowToastNotification("Hello From Another Application", "We hope you are enjoying Versa Note!", NotificationType.Information);
+```
