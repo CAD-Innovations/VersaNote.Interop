@@ -43,7 +43,7 @@
     <RepositoryUrl>https://github.com/CAD-Innovations/VersaNote.Interop</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>Versa Note Interop</PackageTags>
-    <PackageReleaseNotes>Update NoteTypes_e enum values</PackageReleaseNotes>
+    <PackageReleaseNotes>Add OpenEditor method</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <AssemblyName>VersaNote.Interop</AssemblyName>
   </PropertyGroup>  

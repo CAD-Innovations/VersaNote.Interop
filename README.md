@@ -29,7 +29,12 @@ var deleteNoteResult = VersaNoteAddin.DeleteCustomNote(sheetIndex, sheetNotes.No
 var refreshResult = VersaNoteAddin.RefreshNoteTables(sheetIndex);
 ```
 
-You can also use Versa Note to display toast notifications, which can be helpful to avoid overlapping notifications from multiple add-ins:
+You can also open the Versa Note Editor from another application:
+```
+VersaNoteAddin.OpenEditor();
+```
+
+Or, use Versa Note to display toast notifications, which can be helpful to avoid overlapping notifications from multiple add-ins:
 ```
 VersaNoteAddin.ShowToastNotification("Hello From Another Application", "We hope you are enjoying Versa Note!", NotificationType.Information);
 ```
