@@ -41,7 +41,6 @@
     <Authors>CADInnvoations</Authors>
     <Company>CAD Innovations</Company>
     <RepositoryUrl>https://github.com/CAD-Innovations/VersaNote.Interop</RepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>Versa Note Interop</PackageTags>
     <PackageReleaseNotes>Add OpenEditor method</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
