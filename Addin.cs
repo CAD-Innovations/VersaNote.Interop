@@ -224,13 +224,13 @@ namespace VersaNote.Interop
             }
         }
 
-        public void ShowToastNotification(string title, string message, NotificationType notificationType)
+        public void ShowToastNotification(string title, string message, NotificationType notificationType, int delaySeconds = 4)
         {
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(ShowToastNotification));
             if (method != null)
             {
                 int intNotificationType = (int)notificationType;
-                object[] parameters = new object[] { title, message, intNotificationType };
+                object[] parameters = new object[] { title, message, intNotificationType, delaySeconds };
                 method.Invoke(VersaNoteObject, parameters);
             }
         }
