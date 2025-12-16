@@ -50,7 +50,26 @@ namespace VersaNote.Interop
         public bool Indented { get; set; }
     }
 
+    public struct GetLinkedAnnotationsResult
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public LinkedAnnotation[] LinkedAnnotations { get; set; }
+    }
+
+    public struct LinkedAnnotation
+    {
+        public string NoteId { get; set; }
+        public string Text { get; set; }
+    }
+
     public struct RefreshNoteTablesResult
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
+
+    public struct UpdatedLinkedAnnotationResult
     {
         public bool Success { get; set; }
         public string Message { get; set; }

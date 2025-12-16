@@ -8,6 +8,7 @@
         GetSheetNotesResult GetAllSheetNotes(int sheetIndex);
         void OpenEditor();
         RefreshNoteTablesResult RefreshNoteTables(int sheetIndex);
+        UpdatedLinkedAnnotationResult UpdatedLinkedAnnotationsOnActiveSheet(string prevNoteId, string newNoteId);
         UpdatedCustomNoteResult UpdateCustomNote(int sheetIndex, string noteId, string newNoteText, bool toggleSubNote = false, bool suppressTableRefresh = false);
     }
 }

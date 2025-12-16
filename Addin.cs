@@ -292,6 +292,61 @@ namespace VersaNote.Interop
         }
 
         /// <summary>
+        /// Update the note ID for all matching linked annotations on the current sheet
+        /// <para>
+        /// For efficiency, first run GetLinkedAnnotations() to get all linked annotations on a given sheet, and determine if updates are necessary
+        /// </para>
+        /// </summary>
+        /// <param name="prevNoteId">The unique Id of the note the annotation was previously linked to</param>
+        /// <param name="newNoteId">The unique Id of the new note the annotation should be linked to</param>
+        /// <returns>
+        /// A <see cref="UpdatedLinkedAnnotationResult"/> structure containing the result of the operation:
+        /// <list type="bullet">
+        /// <item>
+        /// <term><see cref="UpdatedLinkedAnnotationResult.Success"/></term>
+        /// <description><c>true</c> if linked annotations were found and updated successfully; otherwise, <c>false</c>.</description>
+        /// </item>
+        /// <item>
+        /// <term><see cref="UpdatedLinkedAnnotationResult.Message"/></term>
+        /// <description>
+        ///     A descriptive message providing details about the result. May contain
+        ///     error information if <see cref="UpdatedCustomNoteResult.Success"/> is <c>false</c>.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </returns>
+        /// <example>
+        /// The following example shows how to call this method and inspect the result:
+        /// <code language="csharp">
+        /// var result = VersaNote.Interop.UpdatedLinkedAnnotationsOnActiveSheet("a7d7dc50", "5119c023");
+        /// if (result.Success)
+        /// {
+        ///     Console.WriteLine($"Linked annotations successfully updated");
+        /// }
+        /// else
+        /// {
+        ///     Console.WriteLine($"Failed to update linked annotations: {result.Message}");
+        /// }
+        /// </code>
+        /// </example>
+        public UpdatedLinkedAnnotationResult UpdatedLinkedAnnotationsOnActiveSheet(string prevNoteId, string newNoteId)
+        {
+            MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(UpdatedLinkedAnnotationsOnActiveSheet));
+            if (method != null)
+            {
+                object[] parameters = new object[] { prevNoteId, newNoteId };
+                UpdatedLinkedAnnotationResult updatedCustomNoteResult = (UpdatedLinkedAnnotationResult)method.Invoke(VersaNoteObject, parameters);
+                return updatedCustomNoteResult;
+            }
+
+            return new UpdatedLinkedAnnotationResult()
+            {
+                Success = false,
+                Message = $"{MethodInfo.GetCurrentMethod().Name} method not found in Versa Note"
+            };
+        }
+
+        /// <summary>
         /// Modify an existing custom note on the specified drawing sheet.
         /// <para>
         /// Prior to running this method, you should run GetAllSheetNotes() to get the ID of the custom note to modify.
