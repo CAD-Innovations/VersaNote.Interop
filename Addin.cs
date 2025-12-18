@@ -215,6 +215,67 @@ namespace VersaNote.Interop
             };
         }
 
+        /// <summary>
+        /// Get all linked annotations on the specified sheet
+        /// </summary>
+        /// <param name="sheetIndex">A 1 based sheet number index</param>
+        /// <returns>
+        /// A <see cref="GetLinkedAnnotationsResult"/> structure containing the result of the operation:
+        /// <list type="bullet">
+        /// <item>
+        /// <term><see cref="GetLinkedAnnotationsResult.Success"/></term>
+        /// <description><c>true</c> if linked annotations were found; otherwise, <c>false</c>.</description>
+        /// </item>
+        /// <item>
+        /// <term><see cref="GetLinkedAnnotationsResult.Message"/></term>
+        /// <description>
+        ///     A descriptive message providing details about the result. May contain
+        ///     error information if <see cref="UpdatedCustomNoteResult.Success"/> is <c>false</c>.
+        /// </description>
+        /// </item>
+        ///   <item>
+        ///     <term><see cref="GetLinkedAnnotationsResult.LinkedAnnotations"/></term>
+        ///     <description>
+        ///     An array of <see cref="LinkedAnnotation"/> objects representing the linked annotations associated
+        ///     with the sheet. This array may be empty or <c>null</c> if no linked annotations exist.
+        ///     </description>
+        ///   </item>
+        /// </list>
+        /// <para>
+        /// Each <see cref="LinkedAnnotation"/> object includes:
+        /// </para>
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="LinkedAnnotation.NoteId"/></term>
+        ///     <description>
+        ///         The Id of the Note that the annotation is linked to.
+        ///     </description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="LinkedAnnotation.Text"/></term>
+        ///     <description>
+        ///        The full display text of the linked annotation.
+        ///     </description>
+        ///   </item>
+        /// </list>
+        /// </returns>
+        public GetLinkedAnnotationsResult GetLinkedAnnotationsOnSheet(int sheetIndex)
+        {
+            MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(GetLinkedAnnotationsOnSheet));
+            if (method != null)
+            {
+                object[] parameters = new object[] { sheetIndex };
+                GetLinkedAnnotationsResult updatedCustomNoteResult = (GetLinkedAnnotationsResult)method.Invoke(VersaNoteObject, parameters);
+                return updatedCustomNoteResult;
+            }
+
+            return new GetLinkedAnnotationsResult()
+            {
+                Success = false,
+                Message = $"{MethodInfo.GetCurrentMethod().Name} method not found in Versa Note"
+            };
+        }
+
         public void OpenEditor()
         {
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(OpenEditor));

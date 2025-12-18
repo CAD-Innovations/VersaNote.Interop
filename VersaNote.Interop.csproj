@@ -43,7 +43,7 @@
     <RepositoryUrl>https://github.com/CAD-Innovations/VersaNote.Interop</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>Versa Note Interop</PackageTags>
-    <PackageReleaseNotes>Add missing methods to IAddin interface</PackageReleaseNotes>
+    <PackageReleaseNotes>Added GetLinkedAnnotationsOnSheet and UpdatedLinkedAnnotationsOnActiveSheet methods</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <AssemblyName>VersaNote.Interop</AssemblyName>
   </PropertyGroup>  
