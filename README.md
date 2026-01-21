@@ -29,6 +29,22 @@ var deleteNoteResult = VersaNoteAddin.DeleteCustomNote(sheetIndex, sheetNotes.No
 var refreshResult = VersaNoteAddin.RefreshNoteTables(sheetIndex);
 ```
 
+In certain cases, notes with associated linked annotations may need to be linked to a different note (for example, if indented child notes are added to a parent note, e.g. note 7. becomes 7.1)
+
+To get the list of linked annotations on the current sheet:
+```
+var linkedAnnotations = VersaNoteAddin.GetLinkedAnnotationsOnSheet(sheetIndex);
+```
+
+You can iterate through the list of linked annotations to determine if the current sheet contains annotations associated with a given note, and then re-assign those annotations to a new note:
+```
+var matchingItems = linkedAnnotations.ToList().FirstOrDefault(x => x.NoteId == parentNote.Id);
+
+if (matchingItems.Count() > 0)
+    VersaNoteAddin.UpdatedLinkedAnnotationsOnActiveSheet(parentNote.Id, childNote.Id);
+```
+The note number associated with the linked annotation will be updated automatically.
+
 You can also open the Versa Note Editor from another application:
 ```
 VersaNoteAddin.OpenEditor();
