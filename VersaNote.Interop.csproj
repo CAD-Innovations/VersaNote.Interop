@@ -43,7 +43,7 @@
     <RepositoryUrl>https://github.com/CAD-Innovations/VersaNote.Interop</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>Versa Note Interop</PackageTags>
-    <PackageReleaseNotes>Updated ReadMe to include usage examples for GetLinkedAnnotationsOnSheet and UpdatedLinkedAnnotationsOnActiveSheet methods</PackageReleaseNotes>
+    <PackageReleaseNotes>Added linkNote parameter to AddCustomNote and toggleLinkNote parameter to UpdateCustomNote methods</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <AssemblyName>VersaNote.Interop</AssemblyName>
   </PropertyGroup>  
