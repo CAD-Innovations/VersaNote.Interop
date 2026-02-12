@@ -26,8 +26,9 @@ namespace VersaNote.Interop
         /// <param name="noteIndex">(Optional) A 0 based note index. Specify -1 to add to the end of the notes.</param>
         /// <param name="subNote">(Optional) Set true to create an indented sub-note</param>
         /// <param name="parentId">(Optional) If creating an indented sub-note, you must specify the parent note ID, and the specified note position will be interpreted relative to the parent note (i.e. if the parent note is 3. a noteIndex of 0 would create note 3.1)</param>
-        /// <param name="suppressTableRefresh">(Optional) Set true to suppress note table refresh for improved performance when making multiple API calls</param>
         /// <param name="linkNote">(Optional) Set true to create this new custom note as a linked note (this will not add linked annotations, this is up to the user)</param>
+        /// <param name="suppressTableRefresh">(Optional) Set true to suppress note table refresh for improved performance when making multiple API calls</param>
+        /// <param name="resetTablePosition">(Optional) Set true to reset the note table position after modification (has no effect if suppressTableRefresh is false)</param>
         /// <returns>
         /// A <see cref="AddCustomNoteResult"/> structure containing the result of the operation:
         /// <list type="bullet">
@@ -64,7 +65,7 @@ namespace VersaNote.Interop
         /// }
         /// </code>
         /// </example>
-        public AddCustomNoteResult AddCustomNote(int sheetIndex, string noteText, int noteIndex = -1, bool subNote = false, string parentId = "", bool suppressTableRefresh = false, bool linkNote = false)
+        public AddCustomNoteResult AddCustomNote(int sheetIndex, string noteText, int noteIndex = -1, bool subNote = false, string parentId = "", bool linkNote = false, bool suppressTableRefresh = false, bool resetTablePosition = false)
         {
             if (subNote == true && parentId == "")
                 return new AddCustomNoteResult()
@@ -77,7 +78,7 @@ namespace VersaNote.Interop
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(AddCustomNote));
             if (method != null)
             {
-                object[] parameters = new object[] { sheetIndex, noteText, noteIndex, subNote, parentId, suppressTableRefresh, linkNote };
+                object[] parameters = new object[] { sheetIndex, noteText, noteIndex, subNote, parentId, linkNote, suppressTableRefresh, resetTablePosition };
                 AddCustomNoteResult AddCustomNoteResult = (AddCustomNoteResult)method.Invoke(VersaNoteObject, parameters);
                 return AddCustomNoteResult;
             }
@@ -95,6 +96,7 @@ namespace VersaNote.Interop
         /// <param name="sheetIndex">A 1 based sheet number index</param>
         /// <param name="noteId">The unique Id of the note to be deleted</param>
         /// <param name="suppressTableRefresh">(Optional) Set true to suppress note table refresh for improved performance when making multiple API calls</param>
+        /// <param name="resetTablePosition">(Optional) Set true to reset the note table position after modification (has no effect if suppressTableRefresh is false)</param>
         /// <returns>
         /// A <see cref="DeleteCustomNoteResult"/> structure containing the result of the operation:
         /// <list type="bullet">
@@ -125,14 +127,14 @@ namespace VersaNote.Interop
         /// }
         /// </code>
         /// </example>
-        public DeleteCustomNoteResult DeleteCustomNote(int sheetIndex, string noteId, bool suppressTableRefresh = false)
+        public DeleteCustomNoteResult DeleteCustomNote(int sheetIndex, string noteId, bool suppressTableRefresh = false, bool resetTablePosition = false)
         {
             // if the note is not custom, return error
 
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(DeleteCustomNote));
             if (method != null)
             {
-                object[] parameters = new object[] { sheetIndex, noteId, suppressTableRefresh };
+                object[] parameters = new object[] { sheetIndex, noteId, suppressTableRefresh, resetTablePosition };
                 DeleteCustomNoteResult deleteCustomNoteResult = (DeleteCustomNoteResult)method.Invoke(VersaNoteObject, parameters);
                 return deleteCustomNoteResult;
             }
@@ -304,6 +306,7 @@ namespace VersaNote.Interop
         /// </para>
         /// </summary>
         /// <param name="sheetIndex">A 1 based sheet number index</param>
+        /// <param name="resetTablePosition">(Optional) Set true to reset the note table position during table refresh</param>
         /// <returns>
         /// A <see cref="RefreshNoteTablesResult"/> structure containing the result of the operation:
         /// <list type="bullet">
@@ -336,12 +339,12 @@ namespace VersaNote.Interop
         /// }
         /// </code>
         /// </example>
-        public RefreshNoteTablesResult RefreshNoteTables(int sheetIndex)
+        public RefreshNoteTablesResult RefreshNoteTables(int sheetIndex, bool resetTablePosition = false)
         {
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(RefreshNoteTables));
             if (method != null)
             {
-                object[] parameters = new object[] { sheetIndex };
+                object[] parameters = new object[] { sheetIndex, resetTablePosition };
                 RefreshNoteTablesResult commitNoteUpdatesResult = (RefreshNoteTablesResult)method.Invoke(VersaNoteObject, parameters);
                 return commitNoteUpdatesResult;
             }
@@ -418,8 +421,9 @@ namespace VersaNote.Interop
         /// <param name="noteId">The unique Id of the note to be updated</param>
         /// <param name="newNoteText">Note text</param>
         /// <param name="toggleSubNote">(Optional) Set true to toggle the sub-note indenting status</param>
-        /// <param name="suppressTableRefresh">(Optional) Set true to suppress note table refresh for improved performance when making multiple API calls</param>
         /// <param name="toogleLinkNote">(Optional) Set true to toggle a link note off or set a note to a link note (this will not add or remove linked annotations, this is up to the user)</param>
+        /// <param name="suppressTableRefresh">(Optional) Set true to suppress note table refresh for improved performance when making multiple API calls</param>
+        /// <param name="resetTablePosition">(Optional) Set true to reset the note table position after modification (has no effect if suppressTableRefresh is false)</param>
         /// <returns>
         /// A <see cref="UpdatedCustomNoteResult"/> structure containing the result of the operation:
         /// <list type="bullet">
@@ -450,12 +454,12 @@ namespace VersaNote.Interop
         /// }
         /// </code>
         /// </example>
-        public UpdatedCustomNoteResult UpdateCustomNote(int sheetIndex, string noteId, string newNoteText, bool toggleSubNote = false, bool suppressTableRefresh = false, bool toogleLinkNote = false)
+        public UpdatedCustomNoteResult UpdateCustomNote(int sheetIndex, string noteId, string newNoteText, bool toggleSubNote = false , bool toogleLinkNote = false, bool suppressTableRefresh = false, bool resetTablePosition = false)
         {
             MethodInfo method = methods.FirstOrDefault(x => x.Name == nameof(UpdateCustomNote));
             if (method != null)
             {
-                object[] parameters = new object[] { sheetIndex, noteId, newNoteText, toggleSubNote, suppressTableRefresh, toogleLinkNote };
+                object[] parameters = new object[] { sheetIndex, noteId, newNoteText, toggleSubNote, toogleLinkNote, suppressTableRefresh, resetTablePosition };
                 UpdatedCustomNoteResult updatedCustomNoteResult = (UpdatedCustomNoteResult)method.Invoke(VersaNoteObject, parameters);
                 return updatedCustomNoteResult;
             }
